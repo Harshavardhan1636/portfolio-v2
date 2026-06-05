@@ -2,6 +2,9 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import TiltCard from "./TiltCard";
+import GlassCard from "./GlassCard";
+import GradientText from "./GradientText";
 
 const PROJECTS = [
   {
@@ -52,7 +55,6 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative py-32 md:py-40">
-      {/* Background accent */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12" ref={ref}>
@@ -63,8 +65,10 @@ export default function Projects() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm text-cyan">03.</span>
-            <div className="hr-accent flex-1 max-w-[200px]" />
+            <span className="font-mono text-sm">
+              <GradientText>03.</GradientText>
+            </span>
+            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
           </div>
           <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
             Projects
@@ -74,57 +78,40 @@ export default function Projects() {
         {/* Featured projects */}
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           {PROJECTS.filter((p) => p.featured).map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + i * 0.15 }}
-              className="group relative bg-noir-card border border-noir-border p-6 md:p-8 hover:border-cyan/30 transition-all duration-500 overflow-hidden"
-            >
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <span className="text-3xl">{project.icon}</span>
-                  <span className="font-mono text-xs text-cyan bg-cyan/10 px-2 py-1 border border-cyan/20">
-                    Featured
-                  </span>
-                </div>
-
-                <h3 className="font-display font-bold text-xl text-cream mb-3 group-hover:text-cyan transition-colors duration-300">
-                  {project.title}
-                </h3>
-
-                <p className="text-muted-light text-sm leading-relaxed mb-5">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-mono text-xs text-muted px-2 py-1 bg-noir border border-noir-border"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+            <TiltCard key={project.title} delay={0.2 + i * 0.15} className="p-6 md:p-8">
+              <div className="flex items-start justify-between mb-4">
+                <span className="text-3xl">{project.icon}</span>
+                <span className="font-mono text-xs gradient-text bg-cyan/10 px-2 py-1 rounded-md border border-cyan/20">
+                  Featured
+                </span>
               </div>
-            </motion.div>
+
+              <h3 className="font-display font-bold text-xl text-cream mb-3 group-hover:text-cyan transition-colors duration-300">
+                {project.title}
+              </h3>
+
+              <p className="text-muted-light text-sm leading-relaxed mb-5">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mono text-xs text-muted px-2 py-1 glass rounded-md hover:text-cyan hover:border-cyan/20 transition-all duration-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </TiltCard>
           ))}
         </div>
 
         {/* Other projects */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {PROJECTS.filter((p) => !p.featured).map((project, i) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-              className="group bg-noir-card border border-noir-border p-5 hover:border-cyan/20 transition-all duration-500"
-            >
+            <GlassCard key={project.title} delay={0.5 + i * 0.1} className="p-5">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-xl">{project.icon}</span>
                 <h3 className="font-display font-bold text-cream group-hover:text-cyan transition-colors duration-300">
@@ -140,13 +127,13 @@ export default function Projects() {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="font-mono text-[10px] text-muted px-1.5 py-0.5 bg-noir border border-noir-border"
+                    className="font-mono text-[10px] text-muted px-1.5 py-0.5 glass rounded-md"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </GlassCard>
           ))}
         </div>
       </div>
