@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import GradientText from "./GradientText";
 
 const LINKS = [
   {
@@ -9,24 +10,28 @@ const LINKS = [
     value: "dpharshavardhan.1636@gmail.com",
     href: "mailto:dpharshavardhan.1636@gmail.com",
     icon: "✉️",
+    glow: "group-hover:shadow-[0_0_20px_rgba(0,229,255,0.15)]",
   },
   {
     label: "LinkedIn",
     value: "linkedin.com/in/harshavardhan",
     href: "https://linkedin.com/in/harshavardhan-dyavanapelli",
     icon: "💼",
+    glow: "group-hover:shadow-[0_0_20px_rgba(0,119,181,0.15)]",
   },
   {
     label: "GitHub",
     value: "github.com/harshavardhan",
     href: "https://github.com/harshavardhan-dyavanapelli",
     icon: "🐙",
+    glow: "group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
   },
   {
     label: "Phone",
     value: "+91 7981248113",
     href: "tel:+917981248113",
     icon: "📱",
+    glow: "group-hover:shadow-[0_0_20px_rgba(255,171,64,0.15)]",
   },
 ];
 
@@ -39,7 +44,8 @@ export default function Contact() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
 
       {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-cyan/[0.02] blur-[150px]" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-cyan/[0.03] blur-[150px]" />
+      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-violet/[0.02] blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12" ref={ref}>
         <motion.div
@@ -51,8 +57,8 @@ export default function Contact() {
           <span className="font-mono text-sm text-cyan tracking-widest uppercase block mb-4">
             07. What&apos;s Next?
           </span>
-          <h2 className="font-display font-extrabold text-4xl md:text-6xl text-cream mb-6">
-            Let&apos;s Build Something
+          <h2 className="font-display font-extrabold text-4xl md:text-6xl mb-6">
+            <GradientText>Let&apos;s Build Something</GradientText>
           </h2>
           <p className="text-muted-light text-lg max-w-2xl mx-auto leading-relaxed">
             I&apos;m actively looking for opportunities in AI/ML engineering,
@@ -79,10 +85,11 @@ export default function Contact() {
                   ? "noopener noreferrer"
                   : undefined
               }
+              data-interactive
               initial={{ opacity: 0, y: 15 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-              className="group bg-noir-card border border-noir-border p-5 text-center hover:border-cyan/30 transition-all duration-500"
+              className={`group glass p-5 text-center transition-all duration-500 ${link.glow}`}
             >
               <span className="text-2xl block mb-2">{link.icon}</span>
               <span className="font-mono text-xs text-muted uppercase tracking-widest block mb-1">
@@ -104,7 +111,8 @@ export default function Contact() {
         >
           <a
             href="mailto:dpharshavardhan.1636@gmail.com"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-cyan text-noir font-display font-bold text-sm tracking-wide uppercase hover:shadow-[0_0_40px_rgba(0,229,255,0.3)] transition-all duration-300"
+            data-interactive
+            className="inline-flex items-center gap-2 px-8 py-4 gradient-primary text-noir font-display font-bold text-sm tracking-wide uppercase hover:shadow-[0_0_40px_rgba(0,229,255,0.3)] hover:scale-105 transition-all duration-300 rounded-lg"
           >
             Say Hello
             <svg
