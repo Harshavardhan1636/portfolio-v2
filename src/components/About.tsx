@@ -1,14 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import CountUp from "./CountUp";
+import GradientText from "./GradientText";
 
 const STATS = [
-  { value: "4+", label: "Internships" },
-  { value: "6+", label: "Projects" },
-  { value: "4", label: "Hackathons" },
-  { value: "10+", label: "Certifications" },
+  { value: 4, suffix: "+", label: "Internships", icon: "💼" },
+  { value: 6, suffix: "+", label: "Projects", icon: "🚀" },
+  { value: 4, suffix: "", label: "Hackathons", icon: "🏆" },
+  { value: 10, suffix: "+", label: "Certifications", icon: "📜" },
 ];
 
 export default function About() {
@@ -26,8 +27,10 @@ export default function About() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm text-cyan">01.</span>
-            <div className="hr-accent flex-1 max-w-[200px]" />
+            <span className="font-mono text-sm">
+              <GradientText>01.</GradientText>
+            </span>
+            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
           </div>
           <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
             About Me
@@ -54,22 +57,11 @@ export default function About() {
             </p>
             <p className="text-muted-light text-lg leading-relaxed mb-6">
               My work spans{" "}
-              <span className="text-cream font-medium">
-                open-source AI development
-              </span>
-              ,{" "}
-              <span className="text-cream font-medium">
-                enterprise cloud platforms
-              </span>
-              ,{" "}
-              <span className="text-cream font-medium">
-                sustainability-focused ML
-              </span>
-              , and{" "}
-              <span className="text-cream font-medium">
-                national-level hackathons
-              </span>
-              . I have a strong foundation in machine learning, computer vision,
+              <span className="text-cream font-medium">open-source AI development</span>,{" "}
+              <span className="text-cream font-medium">enterprise cloud platforms</span>,{" "}
+              <span className="text-cream font-medium">sustainability-focused ML</span>, and{" "}
+              <span className="text-cream font-medium">national-level hackathons</span>.
+              I have a strong foundation in machine learning, computer vision,
               NLP, automation, and system-level thinking.
             </p>
             <p className="text-muted-light text-lg leading-relaxed">
@@ -96,10 +88,11 @@ export default function About() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.5 + i * 0.1 }}
-                  className="bg-noir-card border border-noir-border p-6 group hover:border-cyan/30 transition-colors duration-500"
+                  className="glass glass-hover p-6 text-center group"
                 >
-                  <div className="font-display font-extrabold text-4xl text-cyan mb-1 group-hover:text-shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all">
-                    {stat.value}
+                  <span className="text-2xl block mb-2">{stat.icon}</span>
+                  <div className="font-display font-extrabold text-4xl text-cyan mb-1">
+                    <CountUp end={stat.value} suffix={stat.suffix} />
                   </div>
                   <div className="font-mono text-xs text-muted uppercase tracking-widest">
                     {stat.label}
@@ -108,8 +101,8 @@ export default function About() {
               ))}
             </div>
 
-            {/* Location badge */}
-            <div className="mt-4 flex items-center gap-3 px-4 py-3 bg-noir-card border border-noir-border">
+            {/* Status badge */}
+            <div className="mt-4 glass flex items-center gap-3 px-4 py-3">
               <div className="relative">
                 <div className="w-2 h-2 rounded-full bg-green-500" />
                 <div className="absolute inset-0 w-2 h-2 rounded-full bg-green-500 animate-ping opacity-75" />
