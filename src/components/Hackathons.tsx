@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import GradientText from "./GradientText";
 
 const HACKATHONS = [
   {
@@ -56,8 +57,10 @@ export default function Hackathons() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm text-cyan">06.</span>
-            <div className="hr-accent flex-1 max-w-[200px]" />
+            <span className="font-mono text-sm">
+              <GradientText>06.</GradientText>
+            </span>
+            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
           </div>
           <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
             Hackathons & Certifications
@@ -78,7 +81,7 @@ export default function Hackathons() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-                  className="flex items-start gap-4 bg-noir-card border border-noir-border p-5 hover:border-amber/20 transition-all duration-500 group"
+                  className="flex items-start gap-4 glass glass-hover p-5 group"
                 >
                   <span className="text-2xl flex-shrink-0 mt-0.5">
                     {hack.icon}
@@ -102,21 +105,16 @@ export default function Hackathons() {
               <span className="text-2xl">📜</span>
               Certifications
             </h3>
-            <div className="space-y-2">
+            <div className="flex flex-wrap gap-2">
               {CERTIFICATIONS.map((cert, i) => (
                 <motion.div
                   key={cert}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.06 }}
-                  className="flex items-start gap-3 py-2.5 border-b border-noir-border/50 group"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
+                  className="glass px-3 py-2 text-sm text-muted-light hover:text-cream hover:border-cyan/20 transition-all duration-300 cursor-default"
                 >
-                  <span className="text-cyan text-xs mt-1 flex-shrink-0">
-                    ▸
-                  </span>
-                  <span className="text-muted-light text-sm group-hover:text-cream transition-colors duration-300">
-                    {cert}
-                  </span>
+                  {cert}
                 </motion.div>
               ))}
             </div>
