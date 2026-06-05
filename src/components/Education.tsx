@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import GradientText from "./GradientText";
 
 const EDUCATION = [
   {
@@ -36,8 +37,10 @@ export default function Education() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm text-cyan">05.</span>
-            <div className="hr-accent flex-1 max-w-[200px]" />
+            <span className="font-mono text-sm">
+              <GradientText>05.</GradientText>
+            </span>
+            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
           </div>
           <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
             Education
@@ -45,14 +48,14 @@ export default function Education() {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan/30 via-cyan/10 to-transparent" />
+          {/* Gradient timeline line */}
+          <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan/40 via-violet/30 to-amber/20" />
 
           <div className="space-y-8">
             {EDUCATION.map((edu, i) => (
               <motion.div
                 key={edu.school}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 + i * 0.2 }}
                 className="relative pl-12 md:pl-20"
@@ -60,32 +63,32 @@ export default function Education() {
                 {/* Timeline dot */}
                 <div className="absolute left-2.5 md:left-6.5 top-6">
                   <div
-                    className={`w-3 h-3 rounded-full border-2 ${
+                    className={`w-3.5 h-3.5 rounded-full border-2 ${
                       edu.current
-                        ? "border-cyan bg-cyan/30"
+                        ? "border-cyan bg-cyan/30 shadow-[0_0_10px_rgba(0,229,255,0.3)]"
                         : "border-noir-border bg-noir-card"
                     }`}
                   />
                   {edu.current && (
-                    <div className="absolute inset-0 w-3 h-3 rounded-full bg-cyan/40 animate-ping" />
+                    <div className="absolute inset-0 w-3.5 h-3.5 rounded-full bg-cyan/40 animate-ping" />
                   )}
                 </div>
 
-                <div className="bg-noir-card border border-noir-border p-6 md:p-8 group hover:border-cyan/20 transition-all duration-500">
+                <div className="glass glass-hover p-6 md:p-8">
                   <div className="flex flex-wrap items-baseline gap-3 mb-2">
                     <h3 className="font-display font-bold text-xl text-cream">
                       {edu.degree}
                     </h3>
                     {edu.current && (
-                      <span className="font-mono text-xs text-cyan bg-cyan/10 px-2 py-0.5 border border-cyan/20">
-                        Current
+                      <span className="font-mono text-xs text-cyan bg-cyan/10 px-2 py-0.5 rounded-md border border-cyan/20 animate-pulse">
+                        Present
                       </span>
                     )}
                   </div>
-                  <p className="text-amber font-display font-semibold text-lg mb-1">
+                  <p className="gradient-text-warm font-display font-semibold text-lg mb-1">
                     {edu.field}
                   </p>
-                  <p className="text-muted-light mb-1">{edu.school}</p>
+                  <p className="text-muted-light mb-2">{edu.school}</p>
                   <div className="flex flex-wrap gap-4 font-mono text-sm text-muted">
                     <span>📍 {edu.location}</span>
                     <span>📅 {edu.period}</span>
