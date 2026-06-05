@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
-import GradientText from "./GradientText";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const EXPERIENCES = [
   {
@@ -54,102 +53,58 @@ const EXPERIENCES = [
 export default function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [activeIdx, setActiveIdx] = useState(0);
 
   return (
-    <section id="experience" className="relative py-32 md:py-40">
-      <div className="max-w-7xl mx-auto px-6 md:px-12" ref={ref}>
-        <motion.div
+    <section id="experience" className="py-32 md:py-40 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto" ref={ref}>
+        <motion.h2
+          className="font-display font-bold text-3xl md:text-4xl mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16"
         >
-          <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm">
-              <GradientText>02.</GradientText>
-            </span>
-            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
-          </div>
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
-            Experience
-          </h2>
-        </motion.div>
+          Experience
+        </motion.h2>
 
-        <div className="grid md:grid-cols-12 gap-8">
-          {/* Tab list */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="md:col-span-4 flex md:flex-col overflow-x-auto md:overflow-x-visible gap-2 pb-4 md:pb-0"
-          >
-            {EXPERIENCES.map((exp, i) => (
-              <button
-                key={exp.company}
-                onClick={() => setActiveIdx(i)}
-                data-interactive
-                className={`flex-shrink-0 text-left px-4 py-3 font-mono text-sm transition-all duration-300 rounded-lg ${
-                  activeIdx === i
-                    ? "glass border-cyan/30 text-cyan shadow-[0_0_15px_rgba(0,229,255,0.1)]"
-                    : "text-muted hover:text-cream hover:bg-noir-card/50"
-                }`}
-              >
-                {exp.company.split("—")[0].trim()}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="md:col-span-8"
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIdx}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="glass p-6 md:p-8"
-              >
-                <div className="flex flex-wrap items-baseline gap-3 mb-1">
-                  <h3 className="font-display font-bold text-xl text-cream">
-                    {EXPERIENCES[activeIdx].title}
-                  </h3>
-                  <span className="text-cyan font-display font-bold text-lg">
-                    @ {EXPERIENCES[activeIdx].company.split("—")[0].trim()}
-                  </span>
-                </div>
-                <p className="font-mono text-sm text-muted mb-1">
-                  {EXPERIENCES[activeIdx].company.includes("—")
-                    ? EXPERIENCES[activeIdx].company.split("—")[1].trim()
-                    : ""}
-                </p>
-                <span className="inline-block font-mono text-xs text-cyan/70 bg-cyan/10 px-2 py-1 rounded-md border border-cyan/15 mb-6">
-                  {EXPERIENCES[activeIdx].period}
+        <div className="space-y-12">
+          {EXPERIENCES.map((exp, i) => (
+            <motion.div
+              key={exp.company}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
+              data-interactive
+              className={`border-l-2 transition-all duration-300 ${
+                i === 0
+                  ? "border-accent pl-6 md:pl-8"
+                  : "border-border pl-6 md:pl-8 hover:border-accent"
+              }`}
+            >
+              <div className="flex flex-wrap items-baseline gap-3 mb-1">
+                <h3 className="font-display font-bold text-xl text-text">
+                  {exp.title}
+                </h3>
+                <span className="text-accent font-semibold">
+                  {exp.company.split("—")[0].trim()}
                 </span>
+              </div>
 
-                <ul className="space-y-3">
-                  {EXPERIENCES[activeIdx].highlights.map((point, i) => (
-                    <motion.li
-                      key={point}
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.08 }}
-                      className="flex gap-3 text-muted-light"
-                    >
-                      <span className="text-cyan mt-1.5 flex-shrink-0">▸</span>
-                      <span>{point}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+              <div className="flex flex-wrap gap-4 text-sm text-muted mb-4">
+                {exp.company.includes("—") && (
+                  <span>{exp.company.split("—")[1].trim()}</span>
+                )}
+                <span>{exp.period}</span>
+              </div>
+
+              <ul className="space-y-2">
+                {exp.highlights.map((point) => (
+                  <li key={point} className="text-muted leading-relaxed pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-px before:bg-border">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

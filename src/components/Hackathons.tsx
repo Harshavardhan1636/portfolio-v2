@@ -2,28 +2,23 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import GradientText from "./GradientText";
 
 const HACKATHONS = [
   {
     name: "Smart India Hackathon (SIH) 2025",
     detail: "Shortlisted — Internal Round",
-    icon: "🇮🇳",
   },
   {
     name: "Agentic Ethereum Hackathon – India",
     detail: "Reskilll, Geodework, Scaler School of Technology",
-    icon: "⛓️",
   },
   {
     name: "IndiaAI Impact GenAI Hackathon",
     detail: "IISc (CNI) & IBM Research",
-    icon: "🧪",
   },
   {
     name: "HackWithHyderabad",
     detail: "Microsoft Office, Hyderabad",
-    icon: "🏢",
   },
 ];
 
@@ -46,78 +41,51 @@ export default function Hackathons() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="relative py-32 md:py-40">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12" ref={ref}>
-        <motion.div
+    <section className="py-32 md:py-40 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto" ref={ref}>
+        <motion.h2
+          className="font-display font-bold text-3xl md:text-4xl mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-16"
         >
-          <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-sm">
-              <GradientText>06.</GradientText>
-            </span>
-            <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-cyan/30 to-transparent" />
-          </div>
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl text-cream">
-            Hackathons & Certifications
-          </h2>
-        </motion.div>
+          Hackathons & Certifications
+        </motion.h2>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Hackathons */}
+        <div className="grid lg:grid-cols-2 gap-16">
           <div>
-            <h3 className="font-display font-bold text-xl text-cream mb-6 flex items-center gap-3">
-              <span className="text-2xl">🏆</span>
+            <h3 className="font-display font-bold text-sm uppercase tracking-widest text-accent mb-6">
               Competitions
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {HACKATHONS.map((hack, i) => (
                 <motion.div
                   key={hack.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-                  className="flex items-start gap-4 glass glass-hover p-5 group"
+                  data-interactive
+                  className="hover:pl-2 transition-all duration-300"
                 >
-                  <span className="text-2xl flex-shrink-0 mt-0.5">
-                    {hack.icon}
-                  </span>
-                  <div>
-                    <h4 className="font-display font-bold text-cream group-hover:text-amber transition-colors duration-300">
-                      {hack.name}
-                    </h4>
-                    <p className="font-mono text-sm text-muted mt-1">
-                      {hack.detail}
-                    </p>
-                  </div>
+                  <h4 className="font-semibold text-text">{hack.name}</h4>
+                  <p className="text-sm text-muted mt-1">{hack.detail}</p>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Certifications */}
           <div>
-            <h3 className="font-display font-bold text-xl text-cream mb-6 flex items-center gap-3">
-              <span className="text-2xl">📜</span>
+            <h3 className="font-display font-bold text-sm uppercase tracking-widest text-accent mb-6">
               Certifications
             </h3>
-            <div className="flex flex-wrap gap-2">
-              {CERTIFICATIONS.map((cert, i) => (
-                <motion.div
-                  key={cert}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
-                  className="glass px-3 py-2 text-sm text-muted-light hover:text-cream hover:border-cyan/20 transition-all duration-300 cursor-default"
-                >
-                  {cert}
-                </motion.div>
-              ))}
-            </div>
+            <motion.p
+              className="text-lg leading-relaxed text-text"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {CERTIFICATIONS.join(" · ")}
+            </motion.p>
           </div>
         </div>
       </div>

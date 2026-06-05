@@ -1,23 +1,24 @@
 "use client";
 
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function CustomCursor() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [ring, setRing] = useState({ x: -100, y: -100 });
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const dotX = useSpring(cursorX, { stiffness: 500, damping: 28 });
+  const dotY = useSpring(cursorY, { stiffness: 500, damping: 28 });
+  const ringX = useSpring(cursorX, { stiffness: 120, damping: 20 });
+  const ringY = useSpring(cursorY, { stiffness: 120, damping: 20 });
   const [hovering, setHovering] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Hide on touch devices
-    if ("ontouchstart" in window) return;
-    setVisible(true);
-
-    const handleMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+    const move = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
-    const handleEnter = (e: MouseEvent) => {
+    const over = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (
         target.closest("a") ||
@@ -28,62 +29,46 @@ export default function CustomCursor() {
       }
     };
 
-    const handleLeave = () => setHovering(false);
+    const out = () => setHovering(false);
 
-    window.addEventListener("mousemove", handleMove);
-    document.addEventListener("mouseover", handleEnter);
-    document.addEventListener("mouseout", handleLeave);
-
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseover", over);
+    window.addEventListener("mouseout", out);
     return () => {
-      window.removeEventListener("mousemove", handleMove);
-      document.removeEventListener("mouseover", handleEnter);
-      document.removeEventListener("mouseout", handleLeave);
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseover", over);
+      window.removeEventListener("mouseout", out);
     };
-  }, []);
-
-  // Smooth ring follow
-  useEffect(() => {
-    if (!visible) return;
-    let ringX = ring.x;
-    let ringY = ring.y;
-    let animId: number;
-
-    const smoothFollow = () => {
-      ringX += (pos.x - ringX) * 0.15;
-      ringY += (pos.y - ringY) * 0.15;
-      setRing({ x: ringX, y: ringY });
-      animId = requestAnimationFrame(smoothFollow);
-    };
-    animId = requestAnimationFrame(smoothFollow);
-
-    return () => cancelAnimationFrame(animId);
-  }, [pos.x, pos.y, visible]); // ring intentionally excluded to avoid loop
-
-  if (!visible) return null;
+  }, [cursorX, cursorY]);
 
   return (
     <>
       {/* Dot */}
-      <div
-        className="fixed pointer-events-none z-[10000] rounded-full bg-cyan mix-blend-difference"
+      <motion.div
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-accent pointer-events-none z-[9999]"
         style={{
-          left: pos.x - 3,
-          top: pos.y - 3,
-          width: 6,
-          height: 6,
+          x: dotX,
+          y: dotY,
+          translateX: "-50%",
+          translateY: "-50%",
         }}
+        animate={{ scale: hovering ? 0 : 1 }}
+        transition={{ duration: 0.15 }}
       />
       {/* Ring */}
-      <div
-        className="fixed pointer-events-none z-[10000] rounded-full border border-cyan/50 mix-blend-difference"
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-accent/40 pointer-events-none z-[9999]"
         style={{
-          left: ring.x - (hovering ? 24 : 16),
-          top: ring.y - (hovering ? 24 : 16),
-          width: hovering ? 48 : 32,
-          height: hovering ? 48 : 32,
-          transition: "width 0.3s, height 0.3s",
-          opacity: 0.5,
+          x: ringX,
+          y: ringY,
+          translateX: "-50%",
+          translateY: "-50%",
         }}
+        animate={{
+          scale: hovering ? 1.8 : 1,
+          borderColor: hovering ? "rgba(196, 93, 62, 0.6)" : "rgba(196, 93, 62, 0.25)",
+        }}
+        transition={{ duration: 0.2 }}
       />
     </>
   );

@@ -2,36 +2,27 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import GradientText from "./GradientText";
 
 const LINKS = [
   {
     label: "Email",
     value: "dpharshavardhan.1636@gmail.com",
     href: "mailto:dpharshavardhan.1636@gmail.com",
-    icon: "✉️",
-    glow: "group-hover:shadow-[0_0_20px_rgba(0,229,255,0.15)]",
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/harshavardhan",
-    href: "https://linkedin.com/in/harshavardhan-dyavanapelli",
-    icon: "💼",
-    glow: "group-hover:shadow-[0_0_20px_rgba(0,119,181,0.15)]",
+    value: "linkedin.com/in/harshavardhandyavanapelli",
+    href: "https://www.linkedin.com/in/harshavardhandyavanapelli",
   },
   {
     label: "GitHub",
-    value: "github.com/harshavardhan",
-    href: "https://github.com/harshavardhan-dyavanapelli",
-    icon: "🐙",
-    glow: "group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
+    value: "github.com/Harshavardhan1636",
+    href: "https://github.com/Harshavardhan1636",
   },
   {
     label: "Phone",
     value: "+91 7981248113",
     href: "tel:+917981248113",
-    icon: "📱",
-    glow: "group-hover:shadow-[0_0_20px_rgba(255,171,64,0.15)]",
   },
 ];
 
@@ -40,43 +31,37 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="contact" className="relative py-32 md:py-40">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan/20 to-transparent" />
-
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-cyan/[0.03] blur-[150px]" />
-      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-violet/[0.02] blur-[120px]" />
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12" ref={ref}>
-        <motion.div
+    <section id="contact" className="py-32 md:py-40 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto text-center" ref={ref}>
+        <motion.h2
+          className="font-display font-bold text-3xl md:text-4xl mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
         >
-          <span className="font-mono text-sm text-cyan tracking-widest uppercase block mb-4">
-            07. What&apos;s Next?
-          </span>
-          <h2 className="font-display font-extrabold text-4xl md:text-6xl mb-6">
-            <GradientText>Let&apos;s Build Something</GradientText>
-          </h2>
-          <p className="text-muted-light text-lg max-w-2xl mx-auto leading-relaxed">
-            I&apos;m actively looking for opportunities in AI/ML engineering,
-            research, and applied intelligent systems. Whether you have a
-            question, a project idea, or just want to connect — my inbox is
-            always open.
-          </p>
-        </motion.div>
+          Let&apos;s Connect
+        </motion.h2>
 
-        {/* Contact links */}
-        <motion.div
+        <motion.p
+          className="text-muted text-lg max-w-xl mx-auto mb-12 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {LINKS.map((link, i) => (
-            <motion.a
+          I&apos;m actively looking for opportunities in AI/ML engineering,
+          research, and applied intelligent systems. Whether you have a
+          question, a project idea, or just want to connect — my inbox is
+          always open.
+        </motion.p>
+
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          {LINKS.map((link) => (
+            <a
               key={link.label}
               href={link.href}
               target={link.href.startsWith("http") ? "_blank" : undefined}
@@ -86,49 +71,11 @@ export default function Contact() {
                   : undefined
               }
               data-interactive
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
-              className={`group glass p-5 text-center transition-all duration-500 ${link.glow}`}
+              className="link-underline text-sm text-accent"
             >
-              <span className="text-2xl block mb-2">{link.icon}</span>
-              <span className="font-mono text-xs text-muted uppercase tracking-widest block mb-1">
-                {link.label}
-              </span>
-              <span className="text-cream text-sm group-hover:text-cyan transition-colors duration-300 break-all">
-                {link.value}
-              </span>
-            </motion.a>
+              {link.label}
+            </a>
           ))}
-        </motion.div>
-
-        {/* CTA button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-12"
-        >
-          <a
-            href="mailto:dpharshavardhan.1636@gmail.com"
-            data-interactive
-            className="inline-flex items-center gap-2 px-8 py-4 gradient-primary text-noir font-display font-bold text-sm tracking-wide uppercase hover:shadow-[0_0_40px_rgba(0,229,255,0.3)] hover:scale-105 transition-all duration-300 rounded-lg"
-          >
-            Say Hello
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </a>
         </motion.div>
       </div>
     </section>
