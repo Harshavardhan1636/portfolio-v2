@@ -58,7 +58,7 @@ export default function Experience() {
     <section id="experience" className="py-32 md:py-40 px-6 md:px-12">
       <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.h2
-          className="font-display font-bold text-3xl md:text-4xl mb-16"
+          className="font-display font-bold text-3xl md:text-4xl mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -66,7 +66,7 @@ export default function Experience() {
           Experience
         </motion.h2>
 
-        <div className="space-y-12">
+        <div className="space-y-8 md:space-y-12">
           {EXPERIENCES.map((exp, i) => (
             <motion.div
               key={exp.company}

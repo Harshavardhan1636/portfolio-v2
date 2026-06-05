@@ -18,7 +18,7 @@ export default function About() {
     <section id="about" className="py-32 md:py-40 px-6 md:px-12">
       <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.h2
-          className="font-display font-bold text-3xl md:text-4xl mb-16"
+          className="font-display font-bold text-3xl md:text-4xl mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -26,14 +26,14 @@ export default function About() {
           About
         </motion.h2>
 
-        <div className="grid md:grid-cols-12 gap-12 md:gap-20">
+        <div className="grid md:grid-cols-12 gap-10 md:gap-20">
           <motion.div
             className="md:col-span-7"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-lg leading-relaxed mb-6">
+            <p className="text-base sm:text-lg leading-relaxed mb-6">
               I&apos;m an Applied AI & Machine Learning systems builder with
               hands-on experience designing, training, and integrating
               intelligent systems under real-world constraints. Currently
@@ -43,7 +43,7 @@ export default function About() {
               </span>{" "}
               at Vidya Jyothi Institute of Technology, Hyderabad.
             </p>
-            <p className="text-lg leading-relaxed mb-6">
+            <p className="text-base sm:text-lg leading-relaxed mb-6">
               My work spans{" "}
               <span className="font-semibold">open-source AI development</span>,{" "}
               <span className="font-semibold">enterprise cloud platforms</span>,{" "}
@@ -53,7 +53,7 @@ export default function About() {
               I have a strong foundation in machine learning, computer vision,
               NLP, automation, and system-level thinking.
             </p>
-            <p className="text-lg leading-relaxed">
+            <p className="text-base sm:text-lg leading-relaxed">
               From building multimodal AI virtual assistants to real-time object
               detection systems, I focus on creating{" "}
               <span className="font-semibold text-accent">
@@ -64,7 +64,7 @@ export default function About() {
           </motion.div>
 
           <motion.div
-            className="md:col-span-5 md:border-l md:border-border md:pl-12"
+            className="md:col-span-5 border-t border-border pt-10 md:pt-0 md:border-t-0 md:border-l md:pl-12"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -73,7 +73,7 @@ export default function About() {
               {STATS.map((stat) => (
                 <div
                   key={stat.label}
-                  className="border border-border p-5 text-center hover:border-accent hover:-translate-y-1 transition-all duration-300"
+                  className="border border-border p-4 sm:p-5 text-center hover:border-accent hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="font-display font-bold text-3xl text-accent">
                     {stat.value}

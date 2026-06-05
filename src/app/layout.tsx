@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-body cursor-none">
+      <body className="font-body">
         <CustomCursor />
         {children}
       </body>

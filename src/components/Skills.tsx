@@ -39,7 +39,7 @@ export default function Skills() {
     <section id="skills" className="py-32 md:py-40 px-6 md:px-12">
       <div className="max-w-7xl mx-auto" ref={ref}>
         <motion.h2
-          className="font-display font-bold text-3xl md:text-4xl mb-16"
+          className="font-display font-bold text-3xl md:text-4xl mb-10 sm:mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -60,7 +60,7 @@ export default function Skills() {
               <h3 className="font-display font-bold text-sm uppercase tracking-widest text-accent mb-3">
                 {cat.title}
               </h3>
-              <p className="text-lg leading-relaxed text-text group-hover:text-accent transition-colors duration-300">
+              <p className="text-base sm:text-lg leading-relaxed text-text group-hover:text-accent transition-colors duration-300">
                 {cat.skills.join(" · ")}
               </p>
             </motion.div>

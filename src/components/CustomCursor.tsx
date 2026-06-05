@@ -4,6 +4,8 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function CustomCursor() {
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
+
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const dotX = useSpring(cursorX, { stiffness: 500, damping: 28 });
@@ -13,6 +15,10 @@ export default function CustomCursor() {
   const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
+    // Detect touch-only devices (no fine pointer)
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    setIsTouchDevice(!hasFinePointer);
+
     const move = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -31,15 +37,21 @@ export default function CustomCursor() {
 
     const out = () => setHovering(false);
 
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", over);
-    window.addEventListener("mouseout", out);
+    if (hasFinePointer) {
+      window.addEventListener("mousemove", move);
+      window.addEventListener("mouseover", over);
+      window.addEventListener("mouseout", out);
+    }
+
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
       window.removeEventListener("mouseout", out);
     };
   }, [cursorX, cursorY]);
+
+  // Don't render on touch devices
+  if (isTouchDevice) return null;
 
   return (
     <>

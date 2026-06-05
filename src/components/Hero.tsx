@@ -96,7 +96,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center px-6 md:px-12">
       <div className="max-w-7xl mx-auto w-full">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left — Text */}
           <motion.div style={{ y, opacity }}>
             <motion.div
@@ -132,7 +132,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="mt-8 flex items-center gap-8"
+              className="mt-8 flex flex-wrap items-center gap-4 sm:gap-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.8, duration: 0.8 }}
@@ -190,7 +190,7 @@ export default function Hero() {
               >
                 {/* Image container with spring-driven 3D tilt */}
                 <motion.div
-                  className="relative w-[280px] h-[350px] md:w-[340px] md:h-[420px] overflow-hidden will-change-transform"
+                  className="relative w-[220px] h-[275px] sm:w-[260px] sm:h-[325px] md:w-[340px] md:h-[420px] overflow-hidden will-change-transform"
                   style={{
                     rotateX,
                     rotateY,
@@ -227,7 +227,7 @@ export default function Hero() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-12 left-6 md:left-12 flex flex-col items-center gap-3"
+          className="absolute bottom-12 left-6 md:left-12 hidden sm:flex flex-col items-center gap-3"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5, duration: 1 }}

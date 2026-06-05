@@ -36,9 +36,21 @@ a {
   text-decoration: none;
 }
 
-/* Hide default cursor on interactive elements */
-a, button, [data-interactive] {
-  cursor: none;
+/* Hide default cursor on interactive elements (desktop only) */
+@media (pointer: fine) {
+  a, button, [data-interactive] {
+    cursor: none;
+  }
+}
+
+/* Restore default cursor on touch devices */
+@media (pointer: coarse) {
+  a, button, [data-interactive] {
+    cursor: pointer;
+  }
+  body {
+    cursor: auto;
+  }
 }
 
 /* Smooth underline animation for links */
