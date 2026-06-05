@@ -42,7 +42,7 @@ export default function Navigation() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-noir/80 backdrop-blur-xl border-b border-noir-border/50"
+            ? "bg-noir/70 backdrop-blur-2xl border-b border-noir-glass-border"
             : "bg-transparent"
         }`}
       >
@@ -51,7 +51,7 @@ export default function Navigation() {
             href="#"
             className="font-display font-bold text-lg tracking-tight"
           >
-            <span className="text-cyan">H</span>
+            <span className="gradient-text">H</span>
             <span className="text-cream">.</span>
             <span className="text-muted text-sm font-mono ml-1">v(ardhan)</span>
           </a>
@@ -62,13 +62,20 @@ export default function Navigation() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-1.5 text-sm font-mono transition-colors duration-300 rounded-sm ${
+                className={`relative px-3 py-1.5 text-sm font-mono transition-colors duration-300 rounded-lg ${
                   activeSection === item.href.slice(1)
-                    ? "text-cyan bg-cyan/5"
+                    ? "text-cyan"
                     : "text-muted hover:text-cream"
                 }`}
               >
-                {item.label}
+                {activeSection === item.href.slice(1) && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-0 rounded-lg bg-cyan/10 border border-cyan/20"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
               </a>
             ))}
           </div>
@@ -78,6 +85,7 @@ export default function Navigation() {
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden flex flex-col gap-1.5 p-2"
             aria-label="Toggle menu"
+            data-interactive
           >
             <span
               className={`w-5 h-0.5 bg-cream transition-transform duration-300 ${
@@ -105,7 +113,7 @@ export default function Navigation() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-noir/95 backdrop-blur-2xl pt-20 px-8 md:hidden"
+            className="fixed inset-0 z-40 bg-noir/90 backdrop-blur-2xl pt-20 px-8 md:hidden"
           >
             <div className="flex flex-col gap-2">
               {NAV_ITEMS.map((item, i) => (
@@ -118,7 +126,7 @@ export default function Navigation() {
                   transition={{ delay: i * 0.08 }}
                   className="text-2xl font-display font-bold text-cream py-3 border-b border-noir-border/30"
                 >
-                  <span className="text-cyan font-mono text-sm mr-3">
+                  <span className="gradient-text font-mono text-sm mr-3">
                     0{i + 1}.
                   </span>
                   {item.label}
