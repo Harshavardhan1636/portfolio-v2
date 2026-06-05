@@ -8,10 +8,12 @@ import Education from "@/components/Education";
 import Hackathons from "@/components/Hackathons";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ParticleBackground from "@/components/ParticleBackground";
 
 export default function Home() {
   return (
     <>
+      <ParticleBackground />
       <Navigation />
       <main>
         <Hero />
